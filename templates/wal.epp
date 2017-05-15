@@ -1,0 +1,9 @@
+max_wal_senders = 10
+wal_level = replica
+max_replication_slots = 4
+
+hot_standby = on
+#Already on by manual setup of HA, but...
+
+#Required by pg_rewind
+wal_log_hints = on
