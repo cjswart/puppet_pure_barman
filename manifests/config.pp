@@ -44,10 +44,10 @@ class pure_barman::config
   }
 
   #Apply all the barman client config files resources as exported by barman clients (pure_barman::client_config)
-  File <<| tag == "barman_client_config for ${::fqdn}" |>>
+  File <<| tag == "barman_client_config:${::fqdn}" |>>
 
   #Create all the barman client folders as exported by barman clients (pure_barman::client_config)
-  File <<| tag == "barman_datafolder for ${::fqdn}" |>>
+  File <<| tag == "barman_datafolder:${::fqdn}" |>>
 
   file { '/etc/barman/barman.conf':
     ensure  => file,

@@ -10,39 +10,38 @@ class pure_barman::client_ssh
   if $facts['pure_postgres_ssh_public_key_key'] {
     @@ssh_authorized_key { "postgres@${::fqdn} for barman":
       ensure => present,
-      name   => "postgres@${::fqdn}",
       type   => $facts['pure_postgres_ssh_public_key_type'],
       key    => $facts['pure_postgres_ssh_public_key_key'],
-      tag    => "postgres:${pure_barman::barman_server}",
+      tag    => "postgres:${pure_barman::client::barman_server}",
       user   => 'barman',
     }
   }
 
-  Ssh_authorized_key <<| tag == "barman:${pure_barman::barman_server}" |>>
+  Ssh_authorized_key <<| tag == "barman:${pure_barman::client::barman_server}" |>>
 
-  @@sshkey { "${::fqdn} for ${pure_barman::barman_server}":
+  @@sshkey { "${::fqdn} for ${pure_barman::client::barman_server}":
     name => $facts['fqdn'],
     type => ecdsa-sha2-nistp256,
     key  => $::sshecdsakey,
-    tag  => "postgres:${pure_barman::barman_server}",
+    tag  => "postgres:${pure_barman::client::barman_server}",
   }
 
-  @@sshkey { "${facts['fqdn']}_${facts['networking']['ip']} for ${pure_barman::barman_server}":
+  @@sshkey { "${facts['fqdn']}_${facts['networking']['ip']} for ${pure_barman::client::barman_server}":
     name => $facts['networking']['ip'],
     type => ecdsa-sha2-nistp256,
     key  => $::sshecdsakey,
-    tag  => "postgres:${pure_barman::barman_server}",
+    tag  => "postgres:${pure_barman::client::barman_server}",
   }
 
   if $facts['fqdn'] != $facts['hostname'] {
-    @@sshkey { "${facts['fqdn']}_${facts['hostname']} for ${pure_barman::barman_server}":
+    @@sshkey { "${facts['fqdn']}_${facts['hostname']} for ${pure_barman::client::barman_server}":
       name => $facts['hostname'],
       type => ecdsa-sha2-nistp256,
       key  => $::sshecdsakey,
-      tag  => "postgres:${pure_barman::barman_server}",
+      tag  => "postgres:${pure_barman::client::barman_server}",
     }
   }
 
-  Sshkey <<| tag == "barman:${pure_barman::barman_server}" |>>
+  Sshkey <<| tag == "barman:${pure_barman::client::barman_server}" |>>
 }
 

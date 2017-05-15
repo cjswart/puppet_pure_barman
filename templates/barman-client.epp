@@ -5,10 +5,10 @@
 ; Please see major barman configfile at /etc/barman/barman.conf for general config
 ; Please see /etc/pgpure/barman/conf/barman.conf for a proper template with explanation of values
 
-[<%= ${::fqdn}.downcase %>]
-description =  "<%= ${::fqdn}.downcase %>"
-ssh_command = ssh postgres@<%= ${::fqdn}.downcase %>
-conninfo = host=<%= ${::fqdn}.downcase %> user=postgres
+[<%= $fqdn.downcase %>]
+description =  "<%= $fqdn.downcase %>"
+ssh_command = ssh postgres@<%= $fqdn.downcase %>
+conninfo = host=<%= $fqdn.downcase %> user=postgres
 ;streaming_archiver = on
 
 ;minimum_redundancy = 1

@@ -6,6 +6,7 @@ class pure_barman::client
   $barman_server = undef,
 )
 {
+  include pure_barman::params
 
   include pure_barman::client_install
   include pure_barman::client_config
