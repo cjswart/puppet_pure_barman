@@ -9,8 +9,8 @@ class pure_barman::client_ssh
 
   if $facts['pure_postgres_ssh_public_key_key'] {
     @@ssh_authorized_key { "postgres@${::fqdn} for barman":
-      name   => "postgres@${::fqdn}",
       ensure => present,
+      name   => "postgres@${::fqdn}",
       type   => $facts['pure_postgres_ssh_public_key_type'],
       key    => $facts['pure_postgres_ssh_public_key_key'],
       tag    => "postgres:${pure_barman::barman_server}",
@@ -20,7 +20,7 @@ class pure_barman::client_ssh
 
   Ssh_authorized_key <<| tag == "barman:${pure_barman::barman_server}" |>>
 
-  @@sshkey { "${::fqdn} for ${pure_barman::barman_server}"]:
+  @@sshkey { "${::fqdn} for ${pure_barman::barman_server}":
     name => $facts['fqdn'],
     type => ecdsa-sha2-nistp256,
     key  => $::sshecdsakey,

@@ -49,14 +49,14 @@ class pure_barman::config
   #Create all the barman client folders as exported by barman clients (pure_barman::client_config)
   File <<| tag == "barman_datafolder for ${::fqdn}" |>>
 
-  file { "/etc/barman/barman.epp":
-     ensure  => file,
-     content => epp('pure_barman/barman.epp'),
-     owner   => $pure_postgres::params::postgres_user,
-     group   => $pure_postgres::params::postgres_group,
-     mode    => '0640',
-     require => File["${pure_postgres::pg_etc_dir}/conf.d"],
-     replace => false,
-   }
+  file { '/etc/barman/barman.conf':
+    ensure  => file,
+    content => epp('pure_barman/barman.epp'),
+    owner   => $pure_postgres::params::postgres_user,
+    group   => $pure_postgres::params::postgres_group,
+    mode    => '0640',
+    require => File["${pure_postgres::pg_etc_dir}/conf.d"],
+    replace => false,
+  }
 }
 

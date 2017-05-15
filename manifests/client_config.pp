@@ -25,7 +25,7 @@ class pure_barman::client_config
       ensure => 'directory',
       owner  => $pure_barman::params::barman_user,
       group  => $pure_barman::params::barman_group,
-      mode   => '0755',    
+      mode   => '0755',
       tag    => "barman_datafolder for ${pure_barman::client::barman_server}",
     }
   }

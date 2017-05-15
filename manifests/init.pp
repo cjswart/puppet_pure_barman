@@ -9,9 +9,8 @@ class pure_barman
   include pure_barman::params
 
   class { 'pure_barman::install':
-  } ->
-
-  class { 'pure_barman::config':
+  }
+  -> class { 'pure_barman::config':
   }
 
 }
