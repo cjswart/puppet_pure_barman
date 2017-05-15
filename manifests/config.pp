@@ -3,7 +3,6 @@
 # Configure a barman server to backup postgres database nodes
 class pure_barman::config
 (
-  $barman_server = $pure_barman::barman_server,
 )
 {
   #Create the folder for the configuration files
@@ -15,10 +14,10 @@ class pure_barman::config
   }
 
   #Create the client configuration files for all exported resources of clients linked to this barman cluster
-  Barman_client_config <<| tag == $barman_server |>>
+  Barman_client_config <<| tag == $::fqdn |>>
 
   #reate the datafolders that should hold data for all exported resources of clients linked to this barman cluster
-  Barman_client_subdirs <<| tag == $barman_server |>>
+  Barman_client_subdirs <<| tag == $::fqdn |>>
 
   #Create cron job for barman
   cron { 'backup':
@@ -41,14 +40,14 @@ class pure_barman::config
     connection_type => 'host',
     user            => 'postgres',
     notify          => Class['pure_postgres::reload'],
-    tag             => $barman_server,
+    tag             => $::fqdn,
   }
 
   #Apply all the barman client config files resources as exported by barman clients (pure_barman::client_config)
-  File <<| tag == "barman_client_config for ${pure_barman::barman_server}" |>>
+  File <<| tag == "barman_client_config for ${::fqdn}" |>>
 
   #Create all the barman client folders as exported by barman clients (pure_barman::client_config)
-  File <<| tag == "barman_datafolder for ${pure_barman::barman_server}" |>>
+  File <<| tag == "barman_datafolder for ${::fqdn}" |>>
 
   file { "/etc/barman/barman.epp":
      ensure  => file,

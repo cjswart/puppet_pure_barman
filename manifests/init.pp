@@ -3,7 +3,6 @@
 # Module for doing barman stuff using the PostgresPURE distribution.
 class pure_barman
 (
-  $barman_server = undef,
 )
 {
 
