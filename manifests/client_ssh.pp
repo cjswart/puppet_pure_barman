@@ -19,29 +19,11 @@ class pure_barman::client_ssh
 
   Ssh_authorized_key <<| tag == "barman:${pure_barman::client::barman_server}" |>>
 
-  @@sshkey { "${::fqdn} for ${pure_barman::client::barman_server}":
-    name => $facts['fqdn'],
-    type => ecdsa-sha2-nistp256,
-    key  => $::sshecdsakey,
-    tag  => "postgres:${pure_barman::client::barman_server}",
-  }
-
-  @@sshkey { "${facts['fqdn']}_${facts['networking']['ip']} for ${pure_barman::client::barman_server}":
-    name => $facts['networking']['ip'],
-    type => ecdsa-sha2-nistp256,
-    key  => $::sshecdsakey,
-    tag  => "postgres:${pure_barman::client::barman_server}",
-  }
-
-  if $facts['fqdn'] != $facts['hostname'] {
-    @@sshkey { "${facts['fqdn']}_${facts['hostname']} for ${pure_barman::client::barman_server}":
-      name => $facts['hostname'],
-      type => ecdsa-sha2-nistp256,
-      key  => $::sshecdsakey,
-      tag  => "postgres:${pure_barman::client::barman_server}",
+  if ! defined(Class['pure_postgres::ssh']) {
+    class { 'pure_postgres::ssh':
+      tags => [ pure_barman::client::barman_server, ],
     }
   }
 
-  Sshkey <<| tag == "barman:${pure_barman::client::barman_server}" |>>
 }
 

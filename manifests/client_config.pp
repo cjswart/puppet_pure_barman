@@ -46,17 +46,18 @@ class pure_barman::client_config
     include pure_barman::client_ssh
 
     #Add pg_hba entry for barman server
-    Pure_postgres::Pg_hba <<| tag == $pure_barman::barman_server |>>
+    Pure_postgres::Pg_hba <<| tag == $pure_barman::client::barman_server |>>
 
     #If this file is already defined (like by repmgr role) then don't define it from barman role.
-    if ! defined(File[ "${pure_postgres::pg_etc_dir}/conf.d/wal.conf" ]) {
-      file { "${pure_postgres::pg_etc_dir}/conf.d/wal.conf":
+
+    if ! defined(File[ "${pure_postgres::params::pg_etc_dir}/conf.d/wal.conf" ]) {
+      file { "${pure_postgres::params::pg_etc_dir}/conf.d/wal.conf":
         ensure  => file,
         content => epp('pure_barman/wal.epp'),
         owner   => $pure_postgres::params::postgres_user,
         group   => $pure_postgres::params::postgres_group,
         mode    => '0640',
-        require => File["${pure_postgres::pg_etc_dir}/conf.d"],
+        require => File["${pure_postgres::params::pg_etc_dir}/conf.d"],
         replace => false,
         notify  => Class['pure_postgres::reload'],
       }
