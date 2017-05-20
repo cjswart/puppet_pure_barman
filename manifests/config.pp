@@ -5,6 +5,25 @@ class pure_barman::config
 (
 )
 {
+
+  #Create facter folders where facts script will end up
+  file { [  '/etc/facter', '/etc/facter/facts.d' ]:
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
+  #create facts script to add barman ssh keys to facts
+  file { '/etc/facter/facts.d/pure_barman_facts.sh':
+    ensure  => file,
+    content => epp('pure_barman/pure_barman_facts.epp'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => File['/etc/facter/facts.d'],
+  }
+
   #Create the folder for the configuration files
   file { $pure_barman::params::barman_conf_tree:
     ensure => 'directory',
@@ -13,11 +32,9 @@ class pure_barman::config
     mode   => '0755',
   }
 
-  #Create the client configuration files for all exported resources of clients linked to this barman cluster
-  Barman_client_config <<| tag == $::fqdn |>>
-
-  #reate the datafolders that should hold data for all exported resources of clients linked to this barman cluster
-  Barman_client_subdirs <<| tag == $::fqdn |>>
+  #Barman clients export client configuration files aswell as folder definitions for the client backup data
+  #Lets create those resources
+  File <<| tag == $::fqdn |>>
 
   #Create cron job for barman
   cron { 'backup':
@@ -49,14 +66,27 @@ class pure_barman::config
   #Create all the barman client folders as exported by barman clients (pure_barman::client_config)
   File <<| tag == "barman_datafolder:${::fqdn}" |>>
 
+  file { '/etc/barman':
+    ensure  => directory,
+    owner   => $pure_barman::params::barman_user,
+    group   => $pure_barman::params::barman_group,
+    mode    => '0640',
+  }
+
   file { '/etc/barman/barman.conf':
     ensure  => file,
     content => epp('pure_barman/barman.epp'),
-    owner   => $pure_postgres::params::postgres_user,
-    group   => $pure_postgres::params::postgres_group,
+    owner   => $pure_barman::params::barman_user,
+    group   => $pure_barman::params::barman_group,
     mode    => '0640',
-    require => File["${pure_postgres::pg_etc_dir}/conf.d"],
     replace => false,
+  }
+
+  exec { 'Generate ssh keys for barman user':
+    user    => $pure_barman::params::barman_user,
+    command => '/usr/bin/ssh-keygen -t ed25519 -P "" -f ~/.ssh/id_ed25519',
+    creates => "/home/${pure_barman::params::barman_user}/.ssh/id_ed25519",
+    cwd     => "/home/${pure_barman::params::barman_user}",
   }
 }
 
