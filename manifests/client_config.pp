@@ -3,7 +3,6 @@
 # Configure a postgres database server to be backed up by a barman server
 class pure_barman::client_config
 (
-  $barman_server = $pure_barman::client::barman_server,
 )
 {
 
@@ -15,7 +14,15 @@ class pure_barman::client_config
     group   => $pure_barman::params::barman_group,
     mode    => '0750',
     content => epp('pure_barman/barman-client.epp'),
-    tag     => "barman_client_config:${pure_barman::client::barman_server}",
+    tag     => $pure_barman::client::barman_server,
+  }
+
+  @@file {"${pure_barman::params::barman_data}/${::fqdn}":
+    ensure => 'directory',
+    owner  => $pure_barman::params::barman_user,
+    group  => $pure_barman::params::barman_group,
+    mode   => '0755',
+    tag    => $pure_barman::client::barman_server,
   }
 
   #Also create exported resources for client specific subfolders on barman server
@@ -26,7 +33,7 @@ class pure_barman::client_config
       owner  => $pure_barman::params::barman_user,
       group  => $pure_barman::params::barman_group,
       mode   => '0755',
-      tag    => "barman_datafolder:${pure_barman::client::barman_server}",
+      tag    => $pure_barman::client::barman_server,
     }
   }
 
@@ -39,7 +46,7 @@ class pure_barman::client_config
       group   => $pure_postgres::params::postgres_group,
       mode    => '0750',
       content => epp('pure_barman/backup.epp'),
-      notify  => Class['pure_postgres::reload'],
+      notify  => Class['pure_postgres::restart'],
     }
 
     #All the ssh stuff to be done on barman clients
