@@ -8,7 +8,7 @@ class pure_barman::server_ssh
 {
 
   if $facts['pure_barman_ssh_public_key_key'] {
-    @@ssh_authorized_key { "barman@${::fqdn}":
+    @@ssh_authorized_key { $facts['pure_barman_ssh_public_key_comment']:
       ensure => present,
       type   => $facts['pure_barman_ssh_public_key_type'],
       key    => $facts['pure_barman_ssh_public_key_key'],
