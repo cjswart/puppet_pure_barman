@@ -1,0 +1,24 @@
+    {
+      "name": "pure_barman",
+      "version": "0.9.0",
+      "author": "Joint venture of KPN and Splendid Data",
+      "license": "GPLv3.0",
+      "summary": "A module for adding barman support to a postgres cluster with packages from PostgresPure distribution",
+      "source": "https://github.com/splendiddata/puppet_pure_barman/",
+      "project_page": "https://github.com/splendiddata/puppet_pure_barman/",
+      "issues_url": "https://github.com/splendiddata/puppet_pure_barman/issues",
+      "tags": ["barman", "postgrespure"],
+      "operatingsystem_support": [
+        {
+        "operatingsystem":"RedHat",
+        "operatingsystemrelease":[ "7.3" ]
+        },
+        {
+        "operatingsystem": "CentOS",
+        "operatingsystemrelease": [ "7.3" ]
+        }
+       ],
+      "dependencies": [
+        { "name": "pure_postgres", "version_requirement": ">= 1.0.1 < 1.0.2" }
+      ]
+    }
