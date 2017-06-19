@@ -7,11 +7,13 @@ class pure_barman::config
 {
 
   #Create facter folders where facts script will end up
-  file { [  '/etc/facter', '/etc/facter/facts.d' ]:
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
+  if ! defined(File['/etc/facter/facts.d']) {
+    file { [  '/etc/facter', '/etc/facter/facts.d' ]:
+      ensure => 'directory',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+    }
   }
 
   #create facts script to add barman ssh keys to facts
