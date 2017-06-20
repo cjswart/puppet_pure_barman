@@ -1,0 +1,8 @@
+0.9.1: New release of pure_postgres
+- bumped version in metadata.json fro pure_postgres module.
+
+0.9.0: Initial working release of pure_barman module
+- With this release a replicated cluster can be configured as barman clients
+  and a server can be configured as a barman server.
+  clients will export configuration for barman server and vice versa 
+  (link is made by configuring fqdn of barman server in pure_repmgr role)

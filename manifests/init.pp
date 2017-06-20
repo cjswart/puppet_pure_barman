@@ -3,10 +3,8 @@
 # Module for doing barman stuff using the PostgresPURE distribution.
 class pure_barman
 (
-)
+) inherits pure_barman::params
 {
-
-  include pure_barman::params
 
   class { 'pure_barman::install':
   }

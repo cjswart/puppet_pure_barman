@@ -6,6 +6,14 @@ class pure_barman::config
 )
 {
 
+  file { "${pure_barman::barman_bin_dir}/pure_barman_releasenotes.txt":
+    ensure  => 'file',
+    source => 'puppet:///modules/pure_barman/releasenotes.txt',
+    owner   => $pure_barman::barman_user,
+    group   => $pure_barman::barman_group,
+    mode    => '0750',
+  }
+
   #Create facter folders where facts script will end up
   if ! defined(File['/etc/facter/facts.d']) {
     file { [  '/etc/facter', '/etc/facter/facts.d' ]:
