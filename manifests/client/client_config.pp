@@ -25,11 +25,11 @@ class pure_barman::client_config
 {
 
   file { "${pure_postgres::pg_bin_dir}/pure_barman_releasenotes.txt":
-    ensure  => 'file',
+    ensure => 'file',
     source => 'puppet:///modules/pure_barman/releasenotes.txt',
-    owner   => $pure_barman::barman_user,
-    group   => $pure_barman::barman_group,
-    mode    => '0750',
+    owner  => $pure_barman::barman_user,
+    group  => $pure_barman::barman_group,
+    mode   => '0750',
   }
 
   #Exported resource of configuration file for client specific config on barman server

@@ -39,14 +39,14 @@ class pure_barman::server_ssh
   @@sshkey { $facts['fqdn']:
     type => ecdsa-sha2-nistp256,
     key  => $::sshecdsakey,
-    tag  => "${::fqdn}",
+    tag  => $::fqdn,
   }
 
   @@sshkey { "${facts['fqdn']}_${facts['networking']['ip']}":
     name => $facts['networking']['ip'],
     type => ecdsa-sha2-nistp256,
     key  => $::sshecdsakey,
-    tag  => "${::fqdn}",
+    tag  => $::fqdn,
   }
 
   if $facts['fqdn'] != $facts['hostname'] {
@@ -54,11 +54,11 @@ class pure_barman::server_ssh
       name => $facts['hostname'],
       type => ecdsa-sha2-nistp256,
       key  => $::sshecdsakey,
-      tag  => "${::fqdn}",
+      tag  => $::fqdn,
     }
   }
 
-  Sshkey <<| tag == "${::fqdn}" |>>
+  Sshkey <<| tag == $::fqdn |>>
 
 }
 

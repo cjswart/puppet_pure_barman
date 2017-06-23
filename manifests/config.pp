@@ -24,11 +24,11 @@ class pure_barman::config
 {
 
   file { "${pure_barman::barman_bin_dir}/pure_barman_releasenotes.txt":
-    ensure  => 'file',
+    ensure => 'file',
     source => 'puppet:///modules/pure_barman/releasenotes.txt',
-    owner   => $pure_barman::barman_user,
-    group   => $pure_barman::barman_group,
-    mode    => '0750',
+    owner  => $pure_barman::barman_user,
+    group  => $pure_barman::barman_group,
+    mode   => '0750',
   }
 
   #Create facter folders where facts script will end up
@@ -94,10 +94,10 @@ class pure_barman::config
   File <<| tag == "barman_datafolder:${::fqdn}" |>>
 
   file { '/etc/barman':
-    ensure  => directory,
-    owner   => $pure_barman::params::barman_user,
-    group   => $pure_barman::params::barman_group,
-    mode    => '0640',
+    ensure => directory,
+    owner  => $pure_barman::params::barman_user,
+    group  => $pure_barman::params::barman_group,
+    mode   => '0640',
   }
 
   file { '/etc/barman/barman.conf':

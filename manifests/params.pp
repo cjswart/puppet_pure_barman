@@ -28,6 +28,6 @@ class pure_barman::params
   $barman_client_folders = [ 'base', 'errors', 'incoming', 'streaming', 'wals' ]
   $barman_logdir         = '/var/log/pgpure/barman'
   $barman_logfile        = "${barman_logdir}/barman.log"
-  $barman_bin_dir        = "/usr/pgpure/barman/bin"
+  $barman_bin_dir        = '/usr/pgpure/barman/bin'
 }
 

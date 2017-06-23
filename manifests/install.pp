@@ -25,10 +25,11 @@ class pure_barman::install
 
   package {$pure_barman::params::barman_package:
     ensure => 'installed',
-  } ->
+  }
 
-  file { '/usr/local/bin/barman':
-    ensure => '/usr/pgpure/barman/bin/barman',
+  -> file { '/usr/local/bin/barman':
+    ensure => link,
+    target => '/usr/pgpure/barman/bin/barman',
   }
 
   file { $pure_barman::params::barman_data_tree:
