@@ -16,10 +16,10 @@
 # along with puppet_pure_barman.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# == Class: pure_barman::client_config
+# == Class: pure_barman::client::client_config
 #
 # Configure a postgres database server to be backed up by a barman server
-class pure_barman::client_config
+class pure_barman::client::client_config
 (
 )
 {

@@ -15,11 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with puppet_pure_barman.  If not, see <http://www.gnu.org/licenses/>.
 
-# == Class: pure_barman::client_ssh
+# == Class: pure_barman::client::client_ssh
 #
 # Configure barman ssh keys from barman server on a barman client
 # and export barman client ssh resources for a server
-class pure_barman::client_ssh
+class pure_barman::client::client_ssh
 (
 )
 {

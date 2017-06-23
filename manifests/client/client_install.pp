@@ -15,10 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with puppet_pure_barman.  If not, see <http://www.gnu.org/licenses/>.
 
-# == Class: pure_barman::client_install
+# == Class: pure_barman::client::client_install
 #
 # Configure a postgres database server to be backed up by a barman server
-class pure_barman::client_install
+class pure_barman::client::client_install
 (
 )
 {
