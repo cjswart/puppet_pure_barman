@@ -1,3 +1,5 @@
+#This file is managed by puppet
+
 #wal_level = 'archive'
 #We'l set this in wal.conf
 archive_mode = on
