@@ -76,7 +76,7 @@ class pure_barman::client::client_config
     }
 
     #All the ssh stuff to be done on barman clients
-    include pure_barman::client_ssh
+    include pure_barman::client::client_ssh
 
     #Add pg_hba entry for barman server
     Pure_postgres::Pg_hba <<| tag == $pure_barman::client::barman_server |>>
