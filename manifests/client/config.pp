@@ -92,7 +92,7 @@ class pure_barman::client::config
         mode    => '0640',
         require => File["${pure_postgres::params::pg_etc_dir}/conf.d"],
         replace => false,
-        notify  => Class['pure_postgres::reload'],
+        notify  => Class['pure_postgres::service::reload'],
       }
     }
   }

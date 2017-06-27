@@ -83,7 +83,7 @@ class pure_barman::config
     source          => "${facts['networking']['ip']}/32",
     connection_type => 'host',
     user            => 'postgres',
-    notify          => Class['pure_postgres::reload'],
+    notify          => Class['pure_postgres::service::reload'],
     tag             => $::fqdn,
   }
 
