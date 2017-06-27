@@ -72,7 +72,7 @@ class pure_barman::client::config
       group   => $pure_postgres::params::postgres_group,
       mode    => '0750',
       content => epp('pure_barman/backup.epp'),
-      notify  => Class['pure_postgres::restart'],
+      notify  => Class['pure_postgres::service::restart'],
     }
 
     #All the ssh stuff to be done on barman clients
