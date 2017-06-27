@@ -16,10 +16,10 @@
 # along with puppet_pure_barman.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# == Class: pure_barman::client::client_config
+# == Class: pure_barman::client::config
 #
 # Configure a postgres database server to be backed up by a barman server
-class pure_barman::client::client_config
+class pure_barman::client::config
 (
 )
 {
@@ -76,10 +76,10 @@ class pure_barman::client::client_config
     }
 
     #All the ssh stuff to be done on barman clients
-    include pure_barman::client::client_ssh
+    include pure_barman::client::ssh
 
     #Add pg_hba entry for barman server
-    Pure_postgres::Pg_hba <<| tag == $pure_barman::client::barman_server |>>
+    Pure_postgres::Config::Pg_hba <<| tag == $pure_barman::client::barman_server |>>
 
     #If this file is already defined (like by repmgr role) then don't define it from barman role.
 

@@ -76,7 +76,7 @@ class pure_barman::config
 
   #Create exported resource for pg_hba entry for barman access on postgres database server.
   #This resource is exported by barman server and applied on all postgres database servers.
-  @@pure_postgres::pg_hba {"pg_hba entry for barman from ${facts['networking']['ip']}":
+  @@pure_postgres::config::pg_hba {"pg_hba entry for barman from ${facts['networking']['ip']}":
     database        => 'postgres,replication',
     method          => 'trust',
     state           => 'present',

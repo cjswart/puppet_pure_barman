@@ -25,7 +25,7 @@ class pure_barman::client
 {
   include pure_barman::params
 
-  include pure_barman::client::client_install
-  include pure_barman::client::client_config
+  include pure_barman::client::install
+  include pure_barman::client::config
 }
 
