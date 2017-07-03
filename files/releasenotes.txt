@@ -1,3 +1,10 @@
+1.0.1: Seperate location of barman data, and cleanup
+- You can now specify a different location for barman files. /var/pgpure/barman will still used, but will be a symlink pointing to that other locat
+- Cleanup in pure_postgres:
+  - Moved some manifests to subfolders
+- Renamed client::client_[modname] modules to client::[modname]
+- Bounced pure_postgres version to 1.1.0
+
 1.0.0: This should hold all to create a barman server or configure a barman client properly.
 - Cleanup with puppet lint
 - Moved client stuff to client subdir.
