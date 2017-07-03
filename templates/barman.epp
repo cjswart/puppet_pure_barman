@@ -7,7 +7,7 @@
 ; Please see /etc/pgpure/barman/conf/barman.conf for a proper template with explanation of values
 
 [barman]
-barman_home = <%= $pure_barman::params::barman_data %>
+barman_home = <%= $pure_barman::params::barman_data_dir %>
 barman_user = <%= $pure_barman::params::barman_user %>
 log_file = <%= $pure_barman::params::barman_logfile %>
 path_prefix = /usr/local/bin:/usr/pgpure/postgres/<%= $pure_postgres::params::pg_version %>/bin

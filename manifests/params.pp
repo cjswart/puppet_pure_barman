@@ -21,8 +21,8 @@ class pure_barman::params
   $barman_package        = 'barman'
   $barman_user           = 'barman'
   $barman_group          = 'barman'
-  $barman_data_tree      = [ '/var/pgpure', '/var/pgpure/barman' ]
-  $barman_data           = $barman_data_tree[-1]
+  $pgpure_data_dir       = '/var/pgpure'
+  $barman_data_dir       = "${pgpure_data_dir}/barman"
   $barman_conf_tree      = [ '/etc/pgpure', '/etc/pgpure/barman', '/etc/pgpure/barman/conf' , '/etc/pgpure/barman/conf/barman.d' ]
   $barman_conf           = $barman_conf_tree[-1]
   $barman_client_folders = [ 'base', 'errors', 'incoming', 'streaming', 'wals' ]

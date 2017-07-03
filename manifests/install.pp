@@ -23,6 +23,41 @@ class pure_barman::install
 )
 {
 
+  include pure_barman::barman_user
+
+  file { $pure_barman::params::pgpure_data_dir:
+    ensure => directory,
+    owner  => $pure_barman::params::barman_user,
+    group  => $pure_barman::params::barman_group,
+    mode   => '0750',
+  }
+
+  if $pure_barman::barman_data_dir == $pure_barman::params::barman_data_dir {
+    file { $pure_barman::params::barman_data_dir:
+      ensure  => 'directory',
+      owner   => $pure_barman::params::barman_user,
+      group   => $pure_barman::params::barman_group,
+      mode    => '0700',
+    }
+  }
+  else {
+    if ! defined(File[$pure_barman::barman_data_dir]) {
+      file { $pure_barman::barman_data_dir:
+        ensure => 'directory',
+        owner  => $pure_barman::params::barman_user,
+        group  => $pure_barman::params::barman_group,
+        mode   => '0700',
+      }
+    }
+    file { $pure_barman::params::barman_data_dir:
+      ensure  => 'link',
+      target  => $pure_barman::barman_data_dir,
+      owner  => $pure_barman::params::barman_user,
+      group  => $pure_barman::params::barman_group,
+      mode    => '0700',
+    }
+  }
+
   package {$pure_barman::params::barman_package:
     ensure => 'installed',
   }
@@ -30,13 +65,6 @@ class pure_barman::install
   -> file { '/usr/local/bin/barman':
     ensure => link,
     target => '/usr/pgpure/barman/bin/barman',
-  }
-
-  file { $pure_barman::params::barman_data_tree:
-    ensure => directory,
-    owner  => $pure_barman::params::barman_user,
-    group  => $pure_barman::params::barman_group,
-    mode   => '0750',
   }
 
 }

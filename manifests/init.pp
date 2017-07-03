@@ -20,6 +20,7 @@
 # Module for doing barman stuff using the PostgresPURE distribution.
 class pure_barman
 (
+  $barman_data_dir    = $pure_barman::params::barman_data_dir,
 ) inherits pure_barman::params
 {
 

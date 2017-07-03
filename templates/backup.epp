@@ -3,4 +3,4 @@
 #wal_level = 'archive'
 #We'l set this in wal.conf
 archive_mode = on
-archive_command = 'rsync -a %p barman@<%= $pure_barman::client::barman_server %>:<%= $pure_barman::params::barman_data %>/<%= $::fqdn %>/incoming/%f'
+archive_command = 'rsync -a %p barman@<%= $pure_barman::client::barman_server %>:<%= $pure_barman::params::barman_data_dir %>/<%= $::fqdn %>/incoming/%f'

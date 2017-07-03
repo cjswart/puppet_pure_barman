@@ -40,26 +40,26 @@ class pure_barman::client::config
     group   => $pure_barman::params::barman_group,
     mode    => '0750',
     content => epp('pure_barman/barman-client.epp'),
-    tag     => $pure_barman::client::barman_server,
+    tag     => "barman_client_config:${pure_barman::client::barman_server}",
   }
 
-  @@file {"${pure_barman::params::barman_data}/${::fqdn}":
+  @@file {"${pure_barman::params::barman_data_dir}/${::fqdn}":
     ensure => 'directory',
     owner  => $pure_barman::params::barman_user,
     group  => $pure_barman::params::barman_group,
     mode   => '0755',
-    tag    => $pure_barman::client::barman_server,
+    tag    => "barman_client_datadirs:${pure_barman::client::barman_server}",
   }
 
   #Also create exported resources for client specific subfolders on barman server
   #This is generated on the clients and applied on the barman server (pure_barman::config)
   $pure_barman::params::barman_client_folders.each | String $subdir | {
-    @@file {"${pure_barman::params::barman_data}/${::fqdn}/${subdir}":
+    @@file {"${pure_barman::params::barman_data_dir}/${::fqdn}/${subdir}":
       ensure => 'directory',
       owner  => $pure_barman::params::barman_user,
       group  => $pure_barman::params::barman_group,
       mode   => '0755',
-      tag    => $pure_barman::client::barman_server,
+      tag    => "barman_client_datadirs:${pure_barman::client::barman_server}",
     }
   }
 

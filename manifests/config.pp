@@ -91,7 +91,7 @@ class pure_barman::config
   File <<| tag == "barman_client_config:${::fqdn}" |>>
 
   #Create all the barman client folders as exported by barman clients (pure_barman::client_config)
-  File <<| tag == "barman_datafolder:${::fqdn}" |>>
+  File <<| tag == "barman_client_datadirs:${::fqdn}" |>>
 
   file { '/etc/barman':
     ensure => directory,
@@ -109,11 +109,5 @@ class pure_barman::config
     replace => false,
   }
 
-  exec { 'Generate ssh keys for barman user':
-    user    => $pure_barman::params::barman_user,
-    command => '/usr/bin/ssh-keygen -t ed25519 -P "" -f ~/.ssh/id_ed25519',
-    creates => "/home/${pure_barman::params::barman_user}/.ssh/id_ed25519",
-    cwd     => "/home/${pure_barman::params::barman_user}",
-  }
 }
 
