@@ -9,7 +9,7 @@
 
 [<%= $fqdn.downcase %>]
 description =  "<%= $fqdn.downcase %>"
-ssh_command = ssh postgres@<%= $fqdn.downcase %>
+ssh_command = ssh -q postgres@<%= $fqdn.downcase %>
 conninfo = host=<%= $fqdn.downcase %> user=postgres
 ;streaming_archiver = on
 
