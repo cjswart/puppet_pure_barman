@@ -1,3 +1,6 @@
+1.1.0: No 'ssh output clean' message with motd
+- Fixed 'ssh output clean' message when motd message is set
+
 1.0.1: Seperate location of barman data, and cleanup
 - You can now specify a different location for barman files. /var/pgpure/barman will still used, but will be a symlink pointing to that other locat
 - Cleanup in pure_postgres:
