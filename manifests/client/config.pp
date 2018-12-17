@@ -35,7 +35,7 @@ class pure_barman::client::config
   #Exported resource of configuration file for client specific config on barman server
   #This is generated on barman client and applied on barman server (pure_barman::config)
   @@file { "${pure_barman::params::barman_conf}/${::fqdn}.conf":
-    ensure  => 'present',
+    ensure  => file,
     owner   => $pure_barman::params::barman_user,
     group   => $pure_barman::params::barman_group,
     mode    => '0750',
@@ -44,7 +44,7 @@ class pure_barman::client::config
   }
 
   @@file {"${pure_barman::params::barman_data_dir}/${::fqdn}":
-    ensure => 'directory',
+    ensure => directory,
     owner  => $pure_barman::params::barman_user,
     group  => $pure_barman::params::barman_group,
     mode   => '0755',
@@ -67,16 +67,16 @@ class pure_barman::client::config
   #In that case, skip editing config files and similar stuff.
   if defined(File[ "${pure_postgres::params::pg_etc_dir}/conf.d" ]) {
     file { "${pure_postgres::params::pg_etc_dir}/conf.d/backup.conf":
-      ensure  => 'present',
+      ensure  => file,
       owner   => $pure_postgres::params::postgres_user,
       group   => $pure_postgres::params::postgres_group,
-      mode    => '0750',
+      mode    => '0640',
       content => epp('pure_barman/backup.epp'),
       notify  => Class['pure_postgres::service::restart'],
     }
 
     #All the ssh stuff to be done on barman clients
-    include pure_barman::client::ssh
+    include '::pure_barman::client::ssh'
 
     #Add pg_hba entry for barman server
     Pure_postgres::Config::Pg_hba <<| tag == $pure_barman::client::barman_server |>>
